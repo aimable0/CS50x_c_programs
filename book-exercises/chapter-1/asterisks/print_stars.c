@@ -8,7 +8,7 @@ int main(void)
 
     for (int i = 0; i < max_level; i++)
     {
-        for (int t = 0; t < i; t++)
+        for (int t = 0; t < (i + 1); t++)
         {
             printf("*  ");
         }
