@@ -2,14 +2,14 @@
 
 
 
+// This program attempts to create a user defined bool type
 
 int main(void)
 {
     enum bool {true = 1 , false = 0};
-    // bool valid = true;
-    // enum bool valid = true;
-    enum bool valid;
 
+
+    enum bool valid;
     valid = true;
 
 
@@ -22,14 +22,21 @@ int main(void)
         printf("Opps not sure if this is a bool\n");
     }
 
+    // change valid to false and test.
     valid = false;
 
-    if (!valid)  // not true is true, because valid is false.
+    if (valid)  // not true is true, because valid is false.
     {
-        printf("This is false bool\n");
+        printf("This is true bool\n");
     }
     else
     {
-        printf("THis is true bool\n");
+        printf("THis is false bool\n");
     }
+
+    if (true)
+    {
+        printf("Hello kigali! -- its true");
+    }
+
 }
