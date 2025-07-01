@@ -16,4 +16,8 @@ int main(void)
     // we can use sizeof(datatype) and %zu to print the size in bytes.
     printf("our short int renamed to age has: %zu bytes size.\n", sizeof(age));
 
+    extern int age_1;
+
+    age_1 = 20;
+
 }
