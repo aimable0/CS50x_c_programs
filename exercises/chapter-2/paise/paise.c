@@ -10,7 +10,7 @@ int main(void)
     // program that reads a decimal form and output it into integer
     // ex: 15.95 => 1595
 
-    double number = 1234.89;
+    double number = 12.89;
 
     if (is_decimal(number))
     {
