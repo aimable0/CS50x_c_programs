@@ -7,24 +7,25 @@ int convert_to_int(double num);
 
 int main(void)
 {
-    // program that reads a decimal form and output it into integer
+    // program that reads a decimal form input and output it into integer
     // ex: 15.95 => 1595
 
-    double number = 12.89;
+    double number = 14222.19861;
 
     if (is_decimal(number))
     {
-        int number_int;
-        number_int = convert_to_int(number);
+        int paise;
+        paise = convert_to_int(number);
 
         printf("Decimal form: %f\n", number);
-        printf("Number Paise form: %d", number_int);
+        printf("Paise form: %d paise\n", paise);
     }
     else
     {
         printf("The number: %f has no decimal part", number);
     }
 }
+
 
 double is_decimal(double num)
 {
@@ -42,12 +43,34 @@ double is_decimal(double num)
 }
 
 
+
 int convert_to_int(double num)
 {
-
     while ((int)num != num)
     {
         num *= pow(10, 1);
     }
     return num;
 }
+
+// int convert_to_int(doublenum)
+// {
+
+//     printf("got here in the convert function\n");
+
+//     doubled_num = num;
+
+//     while (1)
+//     {
+//         if ((int) d_num == d_num)
+//         {
+//             break;
+//         }
+//         else
+//         {
+//             d_num *= pow(10, 1);
+//         }
+//     }
+
+//     return (int) d_num;
+// }
