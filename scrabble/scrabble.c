@@ -13,14 +13,17 @@ int main(void)
 {
     // remmber to turn all input in Uppercase
 
-    string word = get_string("Enter letter: ");
+    string word = get_string("Enter letters: ");
     int score = 0;
+
+    
 
     for (int i = 0, n = strlen(word); i < n; i++)
     {
         score += check_score(toupper(word[i]));
     }
     printf("score for %s: %i\n", word, score);
+
 }
 
 
