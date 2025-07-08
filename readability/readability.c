@@ -36,30 +36,39 @@ int main(void)
     string sample_text = get_string("Text: ");
 
     int tot_words = word_count(sample_text);
-    printf("Total words: %i\n", tot_words);
+    // printf("Total words: %i\n", tot_words);
 
     int tot_letters = letter_count(sample_text);
-    printf("Total letters: %i\n", tot_letters);
+    // printf("Total letters: %i\n", tot_letters);
 
     // test if the function returns correct number of sentences.
     int sntncs_count = sentences_count(sample_text);
-    printf("Total sentences: %d\n", sntncs_count);
+    // printf("Total sentences: %d\n", sntncs_count);
 
     // test average_letters.
     float avg_letters = average_letters(tot_letters, tot_words);
-    printf("L: %.2f\n", avg_letters);
+    // printf("L: %.2f\n", avg_letters);
 
     // average sentences per 100 words
     float avg_sntncs = average_sentences(sntncs_count, tot_words);
-    printf("S: %.2f\n", avg_sntncs);
+    // printf("S: %.2f\n", avg_sntncs);
 
 
     // calculate index
     // Formula: index = 0.0588 * L - 0.296 * S - 15.8.
-    float index = 0.0588 * avg_letters - 0.296 * avg_sntncs - 15.8;
-    printf("Index not rounded: %.2f\n", index);
-    printf("Index: %i\n", (int) round(index));
 
+    int index = round(0.0588 * avg_letters - 0.296 * avg_sntncs - 15.8);
+    if (index < 0)
+    {
+        printf("Before Grade 1\n");
+    }
+    else if (index > 16)
+    {
+        printf("Grade: 16+\n");
+    }
+    else{
+        printf("Grade: %i\n", index);
+    }
     return 0;
 }
 
