@@ -20,6 +20,8 @@ int main(void)
     int tot_letters = strlen(sample_text);
     printf("Total letters: %d", tot_letters);
     letter_count(sample_text);
+
+    //more sample
 }
 
 
