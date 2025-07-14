@@ -5,60 +5,88 @@
 #include <string.h>
 
 string encrypt(string text, int key);
+int is_valid_key(string key);
+void use_error(void);
 
 int main(int argc, string argv[])
 {
-    // check if the usage of the program is correct.
+    // check for the correct usage of the program.
     if (argc < 2)
     {
-        printf("Usage: ./caesar key\n");
+        use_error();
         return 1;
     }
 
-
-    // look for a function that can modify a string (CLA) into an int
-    int key;
-
-    if (atoi(argv[1]) >= 0)
+    if (is_valid_key(argv[1]))
     {
-        key = atoi(argv[1]);
+        // get plain text from user.
+        string text = get_string("plaintext:  ");
+
+        // encrypt and print the text.
+        int key = atoi(argv[1]);
+        printf("ciphertext: %s\n",encrypt(text, key));
+        return 0;
     }
     else
     {
-        printf("Key has to be a non-negative integer\n");
+        use_error();
+        return 1;
     }
-
-    // get plain text from user.
-    string text = get_string("plain text:  ");
-
-    // encrypt text.
-    // string cipher_text = encrypt(text, key);
-
-    printf("ciphertext: %s\n",encrypt(text, key));
-
-    return 0;
 }
+
+
+
+
+
+
+
+
+
+
 
 string encrypt(string text, int key)
 {
-    // string encrypted_text;
-    string text_cpy = text;
-    int cypher_key = key % 26;
-
-    for (int i = 0, len = strlen(text_cpy); i < len; i++)
+    for (int i = 0, cypher_key = key % 26, len = strlen(text); i < len; i++)
     {
         // the isalpha sets a condition to ensure only alphabets are rotated.
-        if (isalpha(text_cpy[i]))
+        if (isalpha(text[i]))
         {
-
             // limit handle uppercase and lowercase letters
-            int limit = (isupper(text_cpy[i])) ? 90 : 122;
+            int limit = (isupper(text[i])) ? 90 : 122;
 
             // rotation.
-            text_cpy[i] = ((text_cpy[i] + cypher_key) > limit) ? text_cpy[i] + cypher_key - 26 : text_cpy[i] + cypher_key;
+            text[i] = ((text[i] + cypher_key) > limit) ? text[i] + cypher_key - 26 : text[i] + cypher_key;
 
         }
     }
+    return text;
+}
 
-    return text_cpy;
+
+int is_valid_key(string key)
+{
+    // This program checks if the key valid.
+
+    // check for non-alpha keys.
+    for (int i = 0, len = strlen(key); i < len; i++)
+    {
+        if (isalpha(key[i]))
+        {
+            return false;
+        }
+    }
+
+    // test for non-negative int keys.
+    if (atoi(key) < 0)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+
+void use_error(void)
+{
+    printf("Usage: ./caesar key\n");
 }
