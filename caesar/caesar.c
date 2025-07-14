@@ -34,7 +34,7 @@ int main(int argc, string argv[])
     // encrypt text.
     // string cipher_text = encrypt(text, key);
 
-    printf("cipher text: %s\n",encrypt(text, key));
+    printf("ciphertext: %s\n",encrypt(text, key));
 
     return 0;
 }
@@ -50,7 +50,13 @@ string encrypt(string text, int key)
         // the isalpha sets a condition to ensure only alphabets are rotated.
         if (isalpha(text_cpy[i]))
         {
-            text_cpy[i] = ((text_cpy[i] + cypher_key) > 122) ? text_cpy[i] + cypher_key - 26 : text_cpy[i] + cypher_key;
+
+            // limit handle uppercase and lowercase letters
+            int limit = (isupper(text_cpy[i])) ? 90 : 122;
+
+            // rotation.
+            text_cpy[i] = ((text_cpy[i] + cypher_key) > limit) ? text_cpy[i] + cypher_key - 26 : text_cpy[i] + cypher_key;
+
         }
     }
 
