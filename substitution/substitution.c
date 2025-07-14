@@ -1,46 +1,108 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
 
+
+void use_error(void);
+bool is_valid_key(char key[]);
+
+
 int main(int argc, string argv[])
 {
-    string default_alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    string user_alph = "NQXPOMAFTRHLZGECYJIUWSKDVB";
-
-    string text = get_string("plaintext:  ");
-
-
-    char cypher_text[strlen(text) + 1];
-
-    for (int i = 0, len = strlen(text); i < len; i++)
+    if (argc != 2)
     {
-        // 1. we are checking a letter in the provided text
-        // 2. we are checking the index number it has in normal alphabitical order
-        // 3. we are substituting that letter with another letter
-        // that has the same index in the users provide alphabets (key).
+        use_error();
+        return 1;
+    }
 
-        for (int m = 0, n = strlen(default_alpha); m < n; m++)
+    if (is_valid_key(argv[1]))
+    {
+
+        // string key = "NQXPOMAFTRHLZGECYJIUWSKDVB";
+        string default_alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string key = argv[1];
+
+        string text = get_string("plaintext:  ");
+
+        char cypher_text[strlen(text) + 1];
+
+        // let's encrypt!
+        // steps:
+        // 1. we are looping through all the letters in the provided plaintext.
+        // 2. For each letter we are looking for the index it would have in alphabets
+        // i.e: the index number it has in alphabitical order
+        // 3. we are substituting that letter with another letter
+        // from the user's provided alpha order given they have exact same index
+
+        for (int i = 0, len = strlen(text); i < len; i++)
         {
-            if (text[i] == default_alpha[m])
+            for (int m = 0, n = strlen(default_alpha); m < n; m++)
             {
-                cypher_text[i] = user_alph[m];
-                break;
+                if (default_alpha[m] == toupper(text[i]))
+                {
+                    if (isupper(text[i]))
+                    {
+                        cypher_text[i] = key[m];
+                    }
+                    else
+                    {
+                        cypher_text[i] = tolower(key[m]);
+                    }
+                    break;
+                }
             }
+        }
+
+
+        // displaying the cyphertext.
+        printf("cyphertext: ");
+        for (int i = 0, len = strlen(text); i < len; i++)
+        {
+            printf("%c", cypher_text[i]);
+        }
+        printf("\n");
+
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+
+}
+
+
+
+
+
+
+bool is_valid_key(char key[])
+{
+    // check if key is exactly 26 chars
+    if (strlen(key) != 26)
+    {
+        printf("KeyError: Key must be exactly 26 alpha chars with no repetition\n");
+        return false;
+    }
+
+    for (int i =0, len = strlen(key); i < len; i++)
+    {
+        //info: numbers range 48-57 in ascii
+        if (key[i] >= 48 && key[i] <= 57)
+        {
+            printf("KeyError: Key must be exactly 26 alpha chars with no repetition\n");
+            return false;
         }
     }
 
-    printf("cyphertext: %s\n", cypher_text);
+    return true;    // if all checks has been passed then key is valid
 }
 
-// draft
 
-// we need to map the user's alph order to the default order.
-// hard coded would look something like this...
-// char sub_text[5];
-// sub_text[0] = user_alph[7];
-// sub_text[1] = user_alph[4];
-// sub_text[2] = user_alph[11];
-// sub_text[3] = user_alph[11];
-// sub_text[4] = user_alph[14];
+void use_error(void)
+{
+    printf("Usage: ./substitution key\n");
+}

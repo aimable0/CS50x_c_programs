@@ -29,7 +29,6 @@ int main(int argc, string argv[])
     }
     else
     {
-        use_error();
         return 1;
     }
 }
@@ -72,6 +71,7 @@ bool is_valid_key(string key)
     {
         if (isalpha(key[i]))
         {
+            printf("KeyError: Key contains alphabets.\n");
             return false;
         }
     }
@@ -79,6 +79,7 @@ bool is_valid_key(string key)
     // test for non-negative int keys.
     if (atoi(key) < 0)
     {
+        printf("KeyError: Key is a negative int.\n");
         return false;
     }
 
