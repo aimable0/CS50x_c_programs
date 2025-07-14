@@ -5,7 +5,7 @@
 #include <string.h>
 
 string encrypt(string text, int key);
-int is_valid_key(string key);
+bool is_valid_key(string key);
 void use_error(void);
 
 int main(int argc, string argv[])
@@ -63,7 +63,7 @@ string encrypt(string text, int key)
 }
 
 
-int is_valid_key(string key)
+bool is_valid_key(string key)
 {
     // This program checks if the key valid.
 
