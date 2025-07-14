@@ -11,7 +11,7 @@ void use_error(void);
 int main(int argc, string argv[])
 {
     // check for the correct usage of the program.
-    if (argc < 2)
+    if (argc != 2)
     {
         use_error();
         return 1;
