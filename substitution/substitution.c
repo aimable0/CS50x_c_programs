@@ -5,9 +5,11 @@
 #include <string.h>
 
 
-
 void use_error(void);
 bool is_valid_key(char key[]);
+bool is_text_alpha(char text[]);
+bool has_duplicates(string text);
+
 
 
 int main(int argc, string argv[])
@@ -27,7 +29,7 @@ int main(int argc, string argv[])
 
         string text = get_string("plaintext:  ");
 
-        char cypher_text[strlen(text) + 1];
+        char cipher_text[strlen(text) + 1];
 
         // let's encrypt!
         // steps:
@@ -39,29 +41,37 @@ int main(int argc, string argv[])
 
         for (int i = 0, len = strlen(text); i < len; i++)
         {
-            for (int m = 0, n = strlen(default_alpha); m < n; m++)
+            if (isalpha(text[i]))
             {
-                if (default_alpha[m] == toupper(text[i]))
+                for (int m = 0, n = strlen(default_alpha); m < n; m++)
                 {
-                    if (isupper(text[i]))
+                    if (default_alpha[m] == toupper(text[i]))
                     {
-                        cypher_text[i] = key[m];
+                        if (isupper(text[i]))
+                        {
+                            cipher_text[i] = toupper(key[m]);
+                        }
+                        else
+                        {
+                            cipher_text[i] = tolower(key[m]);
+                        }
+                        break;
                     }
-                    else
-                    {
-                        cypher_text[i] = tolower(key[m]);
-                    }
-                    break;
                 }
             }
+            else
+            {
+                cipher_text[i] = text[i];
+            }
+
         }
 
 
-        // displaying the cyphertext.
-        printf("cyphertext: ");
+        // displaying the ciphertext.
+        printf("ciphertext: ");
         for (int i = 0, len = strlen(text); i < len; i++)
         {
-            printf("%c", cypher_text[i]);
+            printf("%c", cipher_text[i]);
         }
         printf("\n");
 
@@ -79,26 +89,75 @@ int main(int argc, string argv[])
 
 
 
+
+
+
+
+
+
 bool is_valid_key(char key[])
 {
-    // check if key is exactly 26 chars
-    if (strlen(key) != 26)
+    // check if key has no duplicates
+    if (has_duplicates(key))
     {
-        printf("KeyError: Key must be exactly 26 alpha chars with no repetition\n");
         return false;
     }
 
-    for (int i =0, len = strlen(key); i < len; i++)
+    // check if key is exactly 26 chars
+    if (strlen(key) == 26 && is_text_alpha(key))
     {
-        //info: numbers range 48-57 in ascii
-        if (key[i] >= 48 && key[i] <= 57)
+        return true;
+    }
+    printf("KeyError: Key must be exactly 26 alpha chars with no repetition\n");
+    return false;    // if all checks has been passed then key is valid
+}
+
+// check if string is alpha
+bool is_text_alpha(char text[])
+{
+    for (int i = 0, len = strlen(text); i < len; i++)
+    {
+        if (!(isalpha(text[i])))
         {
-            printf("KeyError: Key must be exactly 26 alpha chars with no repetition\n");
             return false;
         }
     }
+    return true;
+}
 
-    return true;    // if all checks has been passed then key is valid
+
+bool has_duplicates(string text)
+{
+    // steps:
+    // let's have a second dynamic set. to check letters against.
+    // this will store already checked and letters
+    // and it will help use check if the current letter is already in the set or not.
+
+    string text_set;
+    bool duplicates = false;
+
+
+    for (int i = 0, len = strlen(text); i < len; i++)
+    {
+        if (duplicates == true)
+        {
+            break;
+        }
+        else
+        {
+            text_set[i] = text[i];
+
+            for (int m = 0, n = strlen(text_set) - 1; m < n; m++)
+            {
+                if (text[i] == text_set[m])
+                {
+                    duplicates = true;
+                    // return true; --EXPLORE WHY THIS LEAD TO SEGMENTATION FAULT (CORE DUMPUED ERROR) !!
+                }
+            }
+        }
+    }
+    return duplicates;
 }
 
 
