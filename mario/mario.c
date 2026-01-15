@@ -2,8 +2,11 @@
 
 int main(void)
 {
-    // int total_row = get_int("Height: ");
-    int total_row = 10;
+    int total_row;
+    do {
+        total_row = get_int("Height: ");
+    } while (total_row < 0);
+
     const int rows = total_row;
 
     int current_row = 1;

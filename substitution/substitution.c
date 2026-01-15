@@ -1,18 +1,15 @@
-#include <stdio.h>
-#include <cs50.h>
+#include "cs50.h"
 #include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 void use_error(void);
 bool is_valid_key(char key[]);
 bool is_text_alpha(char text[]);
 bool has_duplicates(string text);
 
-
-
-int main(int argc, string argv[])
+int main(int argc, char **argv)
 {
     if (argc != 2)
     {
@@ -20,9 +17,11 @@ int main(int argc, string argv[])
         return 1;
     }
 
+    // extract key
+    printf("key: %s\n", argv[1]);
+
     if (is_valid_key(argv[1]))
     {
-
         // string key = "NQXPOMAFTRHLZGECYJIUWSKDVB";
         string default_alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string key = argv[1];
@@ -66,7 +65,6 @@ int main(int argc, string argv[])
 
         }
 
-
         // displaying the ciphertext.
         printf("ciphertext: ");
         for (int i = 0, len = strlen(text); i < len; i++)
@@ -79,21 +77,11 @@ int main(int argc, string argv[])
     }
     else
     {
+        printf("Invalid Key\n");
         return 1;
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 bool is_valid_key(char key[])
 {
@@ -103,6 +91,7 @@ bool is_valid_key(char key[])
         return false;
     }
 
+    printf("got here\n");
     // check if key is exactly 26 chars
     if (strlen(key) == 26 && is_text_alpha(key))
     {
@@ -125,41 +114,24 @@ bool is_text_alpha(char text[])
     return true;
 }
 
-
 bool has_duplicates(string text)
 {
-    // steps:
-    // let's have a second dynamic set. to check letters against.
-    // this will store already checked and letters
-    // and it will help use check if the current letter is already in the set or not.
-
-    string text_set;
-    bool duplicates = false;
-
-
-    for (int i = 0, len = strlen(text); i < len; i++)
+    char *letter = text;
+    int len = (int) strlen(text);
+    *letter = tolower(*letter);
+    while(letter < text + len)
     {
-        if (duplicates == true)
+        int i = 0;
+        while(text[i] != '\0')
         {
-            break;
+            if (letter != &text[i]
+                && *letter == tolower(text[i])) return true;
+            i++;
         }
-        else
-        {
-            text_set[i] = text[i];
-
-            for (int m = 0, n = strlen(text_set) - 1; m < n; m++)
-            {
-                if (text[i] == text_set[m])
-                {
-                    duplicates = true;
-                    // return true; --EXPLORE WHY THIS LEAD TO SEGMENTATION FAULT (CORE DUMPUED ERROR) !!
-                }
-            }
-        }
+        letter++;
     }
-    return duplicates;
+    return false;
 }
-
 
 void use_error(void)
 {

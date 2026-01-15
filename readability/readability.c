@@ -4,7 +4,6 @@
 #include <cs50.h>
 #include <ctype.h>
 
-
 // prototypes - function declarations.
 int word_count(string word);
 int letter_count(string text);
@@ -111,7 +110,7 @@ int letter_count(string text)
     for (int i = 0, len = strlen(text); i < len; i++)
     {
         // check if the current character in the text is a letter
-        if isalpha(text[i])
+        if (isalpha(text[i]))
         {
             tot_letters++;      //increment the number of letters
         }
