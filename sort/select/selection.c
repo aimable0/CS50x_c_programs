@@ -5,10 +5,10 @@
 
 void selection_sort(int *a, int len);
 
-int main(void)
+int main(int argc, char *argv[])
 {
     // Read from file
-    FILE *fp = fopen("random5000.txt", "r");
+    FILE *fp = fopen(argv[1], "r");
 
     if (fp == NULL)
     {
@@ -20,18 +20,13 @@ int main(void)
     char strnum[6];
     int i = 0;
     char *end;
-    while(fgets(strnum, sizeof(strnum), fp) != NULL)
+    while (fgets(strnum, sizeof(strnum), fp) != NULL)
     {
         long value = strtol(strnum, &end, 10);
-        array[i++] = (int) value;
-        if (i >= 5000) break;
+        array[i++] = (int)value;
+        if (i >= 5000)
+            break;
     }
-
-    // little check:
-    i = 0;
-    printf("Unsorted: ");
-    while (i < 20) printf("%d ", array[i++]);
-    printf("\n");
 
     fclose(fp);
 
@@ -40,16 +35,11 @@ int main(void)
 
     FILE *fp2 = fopen("sorted5000.txt", "w");
     i = 0;
-    if (fp2 != NULL) {
-        while(i < 5000)
+    if (fp2 != NULL)
+    {
+        while (i < 5000)
             fprintf(fp2, "%d\n", array[i++]);
     }
-
-    // little check:
-    i = 0;
-    printf("Sorted:  ");
-    while (i < 20) printf("%d ", array[i++]);
-    printf("\n");
 
     fclose(fp2);
 
@@ -79,5 +69,3 @@ void selection_sort(int *a, int len)
         a[index] = temp;
     }
 }
-
-
